@@ -2,36 +2,6 @@
 var APIkey = "0b6df3c6402adfe49bfc48a44c15bfc8";
 var imgBaseURl = "https://openweathermap.org/img/w/";
 
-
-function fiveday(city) {
-  var apiURL =
-    "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + APIkey;
-  var searchValue = document.getElementById("search-value");
-  console.log(apiURL);
-  $.ajax({
-    url: apiURL,
-    method: "GET"
-  }).then(function (response) {
-    for (var i = 0; i < 5; i++) {
-      var resDate = moment(response.list[i * 8].dt_txt).format("LL"); var icon = imgBaseURl + response.list[i * 8].weather[0].icon + ".png";
-      var resTemp = Math.round(response.list[i * 8].main.temp);
-      var resHum = response.list[i * 8].main.humidity;
-      var d1 = $("<div>").attr("class", "mx-auto");
-      var cardImage = $("<img>").attr("src", icon).attr("alt", "forecast");
-      var d2 = $("<div>").attr("class", "card-body bg-light fiveDay");
-      var date = $("<p>").attr("class", "card-text font-weight-bold").text(resDate);
-      var temp = $("<p>").attr("class", "card-text").text("Temperature: " + resTemp + "°F");
-      var hum = $("<p>").attr("class", "card-text").text("Humidity: " + resHum + "%");
-      $("#forecast").append(d2);
-      d2.append(d1);
-      d1.append(cardImage);
-      d2.append(date);
-      d2.append(temp);
-      d2.append(hum);
-    }
-  })
-}
-
 function oneDay(city) {
   var apiURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIkey;
@@ -102,7 +72,40 @@ function oneDay(city) {
       }
     })
   })
+  fiveday()
 }
+
+
+
+function fiveday(city) {
+  var apiURL =
+    "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + APIkey;
+  var searchValue = document.getElementById("search-value");
+  console.log(apiURL);
+  $.ajax({
+    url: apiURL,
+    method: "GET"
+  }).then(function (response) {
+    for (var i = 0; i < 5; i++) {
+      var resDate = moment(response.list[i * 8].dt_txt).format("LL"); var icon = imgBaseURl + response.list[i * 8].weather[0].icon + ".png";
+      var resTemp = Math.round(response.list[i * 8].main.temp);
+      var resHum = response.list[i * 8].main.humidity;
+      var d1 = $("<div>").attr("class", "mx-auto");
+      var cardImage = $("<img>").attr("src", icon).attr("alt", "forecast");
+      var d2 = $("<div>").attr("class", "card-body bg-light fiveDay");
+      var date = $("<p>").attr("class", "card-text font-weight-bold").text(resDate);
+      var temp = $("<p>").attr("class", "card-text").text("Temperature: " + resTemp + "°F");
+      var hum = $("<p>").attr("class", "card-text").text("Humidity: " + resHum + "%");
+      $("#forecast").append(d2);
+      d2.append(d1);
+      d1.append(cardImage);
+      d2.append(date);
+      d2.append(temp);
+      d2.append(hum);
+    }
+  })
+}
+
 
 //onclick with #search-button
 //call oneday with the city
