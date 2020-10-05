@@ -5,6 +5,7 @@ var imgBaseURl = "https://openweathermap.org/img/w/";
 function oneDay(city) {
   var apiURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIkey;
+  var searchValue = document.getElementById("search-value");
   console.log(apiURL)
   $.ajax({
     url: apiURL,
@@ -72,7 +73,6 @@ function oneDay(city) {
       }
     })
   })
-  fiveday()
 }
 
 
