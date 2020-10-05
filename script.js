@@ -5,7 +5,7 @@ var imgBaseURl = "https://openweathermap.org/img/w/";
 
 function fiveday(city) {
   var apiURL =
-    "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIkey;
+    "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + APIkey;
   var searchValue = document.getElementById("search-value");
   console.log(apiURL);
   $.ajax({
@@ -14,24 +14,17 @@ function fiveday(city) {
   }).then(function (response) {
     for (var i = 0; i < 5; i++) {
       var resDate = moment(response.list[i * 8].dt_txt).format("LL"); var icon = imgBaseURl + response.list[i * 8].weather[0].icon + ".png";
-      var resTemp = response.list[i * 8].main.temp;
+      var resTemp = Math.round(response.list[i * 8].main.temp);
       var resHum = response.list[i * 8].main.humidity;
-      var cardImage = $("<img>").attr("src", icon).attr("class", "card-img-top").attr("alt", "forecast");
-      var d1 = $("<div>").attr("class", "card fiveDay");
-      var d2 = $("<div>").attr("class", "card-body bg-light");
+      var d1 = $("<div>").attr("class", "mx-auto");
+      var cardImage = $("<img>").attr("src", icon).attr("alt", "forecast");
+      var d2 = $("<div>").attr("class", "card-body bg-light fiveDay");
       var date = $("<p>").attr("class", "card-text").text("Date: " + resDate);
-      var temp = $("<p>").attr("class", "card-text").text("Temperature: " + resTemp);
-      var hum = $("<p>").attr("class", "card-text").text("Humidity: " + resHum);
-      //       <div class="card" style="width: 18rem;">
-      //         <img src="..." class="card-img-top" alt="...">
-      //           <div class="card-body">
-      //             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      //           </div>
-      // </div>
-
-      $("#forecast").append(d1);
+      var temp = $("<p>").attr("class", "card-text").text("Temperature: " + resTemp + "°F");
+      var hum = $("<p>").attr("class", "card-text").text("Humidity: " + resHum + "%");
+      $("#forecast").append(d2);
+      d2.append(d1);
       d1.append(cardImage);
-      d1.append(d2);
       d2.append(date);
       d2.append(temp);
       d2.append(hum);
@@ -41,51 +34,73 @@ function fiveday(city) {
 
 function oneDay(city) {
   var apiURL =
-    "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIkey;
+    "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIkey;
   console.log(apiURL)
   $.ajax({
     url: apiURL,
     method: "GET"
   }).then(function (response) {
-
     console.log(response)
-
-    // city 
-    console.log(response.name)
-    // date 
-    console.log(moment().format("LL"))
+    var resName = response.name;
+    // date
+    var resDate1 = moment().format("LL");
     // temp 
-    console.log(response.main.temp)
+    var resTemp1 = Math.round(response.main.temp);
+    console.log(response.main)
     // hum 
-    console.log(response.main.humidity)
+    var resHum1 = response.main.humidity;
     // win 
-    console.log(response.wind.speed)
-
+    var resWind = response.wind.speed;
     var lon = response.coord.lon
     var lat = response.coord.lat
-    console.log(imgBaseURl + response.weather[0].icon + ".png");
-
+    var resIcon1 = imgBaseURl + response.weather[0].icon + ".png";
     // uv(lon and lat)
     var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIkey;
     console.log(uvURL)
-
-
     $.ajax({
       url: uvURL,
       method: "GET"
     }).then(function (uvresponse) {
-      console.log(uvresponse.value)
+      var resUV = uvresponse.value
+      console.log(resUV)
+
+      var cardImage = $("<img>").attr("src", resIcon1).attr("alt", "forecast").attr("class", "align-self-center");
+      var d2 = $("<div>").attr("class", "mx-auto");
+      var d1 = $("<div>").attr("class", "card-body bg-light col-2 oneDay");
+      var city = $("<p>").attr("class", "card-text").text("City: " + resName);
+      var date = $("<p>").attr("class", "card-text").text("Date: " + resDate1);
+      var temp = $("<p>").attr("class", "card-text").text("Temperature: " + resTemp1 + "°F");
+      var hum = $("<p>").attr("class", "card-text").text("Humidity: " + resHum1 + "%");
+      var wind = $("<p>").attr("class", "card-text").text("Wind Speed: " + resWind + "  m/s");
+      var uvDiv = $("<div>").attr("class", "uvIcon");
+      var uv = $("<p>").attr("class", "card-text").text("UV Index: " + resUV);
+      var low = $("<img>").attr("src", "assets/low.png").attr("alt", "uv Icon");
+      var lowMD = $("<img>").attr("src", "assets/low_md.png").attr("alt", "uv Icon");
+      var md = $("<img>").attr("src", "assets/md.png").attr("alt", "uv Icon");
+      var mdHigh = $("<img>").attr("src", "assets/md_high.png").attr("alt", "uv Icon");
+      var high = $("<img>").attr("src", "assets/highest.png").attr("alt", "uv Icon");
+      $("#today").append(d1);
+      d1.append(d2);
+      d2.append(cardImage);
+      d1.append(city);
+      d1.append(date);
+      d1.append(temp);
+      d1.append(hum);
+      d1.append(wind);
+      d1.append(uvDiv);
+      uvDiv.append(uv);
+      if (resUV <= 2) {
+        uvDiv.append(low);
+      } else if (resUV <= 5) {
+        uvDiv.append(lowMD);
+      } else if (resUV <= 7) {
+        uvDiv.append(md);
+      } else if (resUV <= 10) {
+        uvDiv.append(mdHigh);
+      } else if (resUV >= 10.1) {
+        uvDiv.append(high);
+      }
     })
-
-    /*
-    <div class="card">
-  <div class="card-body">
-   
-  </div>
-  </div>
-    */
-
-
   })
 }
 
