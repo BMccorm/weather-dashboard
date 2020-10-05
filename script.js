@@ -26,7 +26,7 @@ function oneDay(city) {
     var lat = response.coord.lat
     var resIcon1 = imgBaseURl + response.weather[0].icon + ".png";
     // uv(lon and lat)
-    var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIkey;
+    var uvURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIkey;
     // console.log(uvURL)
     $.ajax({
       url: uvURL,
