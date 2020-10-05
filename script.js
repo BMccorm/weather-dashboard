@@ -6,18 +6,18 @@ function oneDay(city) {
   var apiURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIkey;
   var searchValue = document.getElementById("search-value");
-  console.log(apiURL)
+  // console.log(apiURL)
   $.ajax({
     url: apiURL,
     method: "GET"
   }).then(function (response) {
-    console.log(response)
+    // console.log(response)
     var resName = response.name;
     // date
     var resDate1 = moment().format("LL");
     // temp 
     var resTemp1 = Math.round(response.main.temp);
-    console.log(response.main)
+    // console.log(response.main)
     // hum 
     var resHum1 = response.main.humidity;
     // win 
@@ -27,13 +27,13 @@ function oneDay(city) {
     var resIcon1 = imgBaseURl + response.weather[0].icon + ".png";
     // uv(lon and lat)
     var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIkey;
-    console.log(uvURL)
+    // console.log(uvURL)
     $.ajax({
       url: uvURL,
       method: "GET"
     }).then(function (uvresponse) {
       var resUV = uvresponse.value
-      console.log(resUV)
+      // console.log(resUV)
 
       var cardImage = $("<img>").attr("src", resIcon1).attr("alt", "forecast").attr("class", "align-self-center");
       var d2 = $("<div>").attr("class", "mx-auto");
@@ -81,12 +81,14 @@ function fiveday(city) {
   var apiURL =
     "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + APIkey;
   var searchValue = document.getElementById("search-value");
-  console.log(apiURL);
+  // console.log(apiURL);
   $.ajax({
     url: apiURL,
     method: "GET"
   }).then(function (response) {
-    for (var i = 0; i < 5; i++) {
+
+    for (var i = 0; i < 6; i++) {
+      console.log(response.list[i].dt)
       var resDate = moment(response.list[i * 8].dt_txt).format("LL"); var icon = imgBaseURl + response.list[i * 8].weather[0].icon + ".png";
       var resTemp = Math.round(response.list[i * 8].main.temp);
       var resHum = response.list[i * 8].main.humidity;
