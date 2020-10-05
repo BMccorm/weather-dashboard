@@ -19,7 +19,7 @@ function fiveday(city) {
       var d1 = $("<div>").attr("class", "mx-auto");
       var cardImage = $("<img>").attr("src", icon).attr("alt", "forecast");
       var d2 = $("<div>").attr("class", "card-body bg-light fiveDay");
-      var date = $("<p>").attr("class", "card-text").text("Date: " + resDate);
+      var date = $("<p>").attr("class", "card-text font-weight-bold").text(resDate);
       var temp = $("<p>").attr("class", "card-text").text("Temperature: " + resTemp + "°F");
       var hum = $("<p>").attr("class", "card-text").text("Humidity: " + resHum + "%");
       $("#forecast").append(d2);
@@ -66,9 +66,9 @@ function oneDay(city) {
 
       var cardImage = $("<img>").attr("src", resIcon1).attr("alt", "forecast").attr("class", "align-self-center");
       var d2 = $("<div>").attr("class", "mx-auto");
-      var d1 = $("<div>").attr("class", "card-body bg-light col-2 oneDay");
-      var city = $("<p>").attr("class", "card-text").text("City: " + resName);
-      var date = $("<p>").attr("class", "card-text").text("Date: " + resDate1);
+      var d1 = $("<div>").attr("class", "card-body bg-light col-3 oneDay");
+      var city = $("<p>").attr("class", "card-text font-weight-bold mx-auto").text(resName);
+      var date = $("<p>").attr("class", "card-text mx-auto font-weight-bold").text(resDate1);
       var temp = $("<p>").attr("class", "card-text").text("Temperature: " + resTemp1 + "°F");
       var hum = $("<p>").attr("class", "card-text").text("Humidity: " + resHum1 + "%");
       var wind = $("<p>").attr("class", "card-text").text("Wind Speed: " + resWind + "  m/s");
