@@ -23,7 +23,7 @@ This weather app displays a five day forecast, along with the wind speed and UV 
 This app doesn't require installation. Click [here](https://bmccorm.github.io/weather-dashboard/ ) to try for yourself.
 
 ## Usage
-Enter a city name and hit the search icon. Previous searches will be displayed below. Click on a previous search to view the forecast again.<br> <br> ![App Demo](assets/gif_demo.gif)
+Enter a city name and hit the search icon. Previous searches will be displayed below. Click on an older search to view the forecast again.<br> <br> ![App Demo](assets/gif_demo.gif)
 
 ## Interested in contributing? Here's how:
 
