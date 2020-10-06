@@ -91,6 +91,11 @@ function fiveday(city) {
   }).then(function (response) {
     var forecast = $("#forecast");
     forecast.empty();
+    var header = $("#header")
+    var h4 = $("<h4>").attr("style", "padding-left:1rem").text("5 Day Forecast:");
+    header.empty();
+    header.append(h4);
+
     for (var i = 0; i <= 5; i++) {
       var resDate = moment(response.list[i * 8].dt_txt).format("LL"); var icon = imgBaseURl + response.list[i * 8].weather[0].icon + ".png";
       var resTemp = Math.round(response.list[i * 8].main.temp);
