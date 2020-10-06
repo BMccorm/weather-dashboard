@@ -17,7 +17,7 @@ Created by [BMcCorm](https://github.com/BMcCorm)
 - [Questions](#Questions)
 
 ## Description
-This weather app displays a five day forecast, along with the wind speed and UV index for the current day. Data is pulled from the Open Weather API and uses localStorage to store past inquiries. 
+This weather app displays a five day forecast, along with the wind speed and UV index for the current day. Data is pulled from the OpenWeather API and uses localStorage to retain past inquiries. 
 
 ## Installation
 This app doesn't require installation. Click [here](https://bmccorm.github.io/weather-dashboard/ ) to try for yourself.

@@ -112,10 +112,14 @@ function fiveday(city) {
 
 $("#search-button").click(function () {
   var searchValue = $("#search-value").val();
-  localStorage.setItem("lastCity", searchValue);
-  $(".history").prepend($("<button>").addClass("list-group-item").text(searchValue).css('text-transform', 'capitalize'));
-  oneDay(searchValue);
-  fiveday(searchValue);
+  if (searchValue == "") {
+    alert("No city found. Please try again")
+  } else {
+    localStorage.setItem("lastCity", searchValue);
+    $(".history").prepend($("<button>").addClass("list-group-item").text(searchValue).css('text-transform', 'capitalize'));
+    oneDay(searchValue);
+    fiveday(searchValue);
+  }
 });
 
 $(document).on("click", ".list-group-item", function () {
