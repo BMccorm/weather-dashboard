@@ -50,7 +50,10 @@ function oneDay(city) {
       var md = $("<img>").attr("src", "assets/md.png").attr("alt", "uv Icon");
       var mdHigh = $("<img>").attr("src", "assets/md_high.png").attr("alt", "uv Icon");
       var high = $("<img>").attr("src", "assets/highest.png").attr("alt", "uv Icon");
-      $("#today").append(d1);
+
+      var todayID = $("#today");
+      todayID.empty();
+      todayID.append(d1);
       d1.append(d2);
       d2.append(cardImage);
       d1.append(city);
@@ -86,9 +89,9 @@ function fiveday(city) {
     url: apiURL,
     method: "GET"
   }).then(function (response) {
-
-    for (var i = 0; i < 6; i++) {
-      console.log(response.list[i].dt)
+    var forecast = $("#forecast");
+    forecast.empty();
+    for (var i = 0; i <= 5; i++) {
       var resDate = moment(response.list[i * 8].dt_txt).format("LL"); var icon = imgBaseURl + response.list[i * 8].weather[0].icon + ".png";
       var resTemp = Math.round(response.list[i * 8].main.temp);
       var resHum = response.list[i * 8].main.humidity;
@@ -109,57 +112,23 @@ function fiveday(city) {
 }
 
 
-//onclick with #search-button
-//call oneday with the city
-//call5day with the city
-//push that city into local storage and make a btn for it
+$("#search-button").click(function () {
+  var searchValue = $("#search-value").val();
+  localStorage.setItem("lastCity", searchValue);
+  $(".history").prepend($("<button>").addClass("list-group-item").text(searchValue).css('text-transform', 'capitalize'));
+  oneDay(searchValue);
+  fiveday(searchValue);
+});
 
-document.querySelector("#search-button").onclick = function () {
-  console.log(document.querySelector("#search-value").value)
-  oneDay(document.querySelector("#search-value").value);
-  fiveday(document.querySelector("#search-value").value);
-};
+$(document).on("click", ".list-group-item", function () {
+  var searchValue = $(this).text();
+  localStorage.setItem("lastCity", searchValue);
+  oneDay(searchValue);
+  fiveday(searchValue);
+});
 
-
-
-// 5day: date icon temp hum 1day: city date temp hum win uv(lon and lat)
-
-
-
-// function getWeatherInfo() {
-//   var place = document.getElementById("place").value.trim();
-//   if (isNaN(place)) {
-//     ajax(apiURL + "&q=" + place);
-//   } else {
-//     ajax(apiURL + "&zip=" + place);
-//   }
-//   console.log(place);
-// }
-
-// // if the object creation is successful, proceed w/ sending data to the server
-// function ajax(url) {
-//   var request = new XMLHttpRequest();
-//   if (request) {
-//     request.open("GET", URL, true);
-//     request.send();
-
-//     // receive response from server
-//     request.onreadystatechange = function () {
-//       if (this.readyState == 4) {
-//         var response = JSON.parse(this.responseText);
-//         var errorMessage = document.getElementById("errorMessage");
-
-//         if (this.status == 200) {
-//           generateCard(response);
-//         } else {
-//           errorMessage.textContent = response.message;
-//         }
-//       }
-//     };
-//   }
-// }
-
-// function generateCard(response) {
-//   weatherInfo.querySelector("#city").textContent =
-//     "Weather in " + response.name + " , " + response.sys.country;
-// }
+var lastCity = localStorage.getItem("lastCity");
+if (lastCity != undefined) {
+  oneDay(lastCity);
+  fiveday(lastCity);
+}
